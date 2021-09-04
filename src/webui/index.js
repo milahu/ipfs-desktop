@@ -11,6 +11,14 @@ const dock = require('../utils/dock')
 const { VERSION, ELECTRON_VERSION } = require('../common/consts')
 const createToggler = require('../utils/create-toggler')
 
+// TODO? move serve to src/index.js
+// fix: localStorage access denied
+// Scheme must be registered before the app is ready
+require('electron').protocol.registerSchemesAsPrivileged([
+  { scheme: 'webui', privileges: { secure: true, standard: true } },
+])
+
+// TODO? move serve to src/index.js
 serve({ scheme: 'webui', directory: join(__dirname, '../../assets/webui') })
 
 const CONFIG_KEY = 'openWebUIAtLaunch'
